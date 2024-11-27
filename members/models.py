@@ -39,3 +39,27 @@ class Actor(models.Model):
     def __str__(self):
         return self.name
 
+class Movie(models.Model):
+    title = models.CharField(max_length=255, null=False, unique=True)
+    description = models.TextField(null=True, unique=False)
+    source = models.CharField(max_length=255, null=True)
+    source1 = models.CharField(blank=True, max_length=255)
+    image_src = models.CharField(max_length=255, null=True)
+    subtitle = models.TextField(blank=True)
+    genres = models.ManyToManyField(Genre, related_name="movie_list", blank=True)
+
+    def __str__(self):
+        return self.title
+
+class TVSeries(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    release_date = models.DateField(null=True, blank=True)
+    genre = models.CharField(max_length=100, blank=True)
+    seasons = models.PositiveIntegerField(default=1)
+    episodes = models.PositiveIntegerField(default=1)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    thumbnail = models.TextField(blank=True)
+    def __str__(self):
+        return self.title
