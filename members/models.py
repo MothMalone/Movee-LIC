@@ -22,3 +22,20 @@ class Member(models.Model):
     def __str__(self):
         return f"{self.firstname} {self.lastname}"
     
+class Genre(models.Model):
+    name = models.CharField(max_length=255, blank=False, unique=True)
+    movies = models.ManyToManyField('Movie', related_name="genre_list", blank = True)
+
+    def __str__(self):
+        return self.name
+
+
+class Actor(models.Model):
+    name = models.CharField(max_length=255, blank=False, unique=True)
+    dob = models.DateField(blank=True)
+    image = models.URLField(blank=True)
+    films = models.ManyToManyField('Movie', related_name="actor_list", blank = True)
+
+    def __str__(self):
+        return self.name
+
