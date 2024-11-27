@@ -63,3 +63,49 @@ class TVSeries(models.Model):
     thumbnail = models.TextField(blank=True)
     def __str__(self):
         return self.title
+
+class Season(models.Model):
+    series = models.ForeignKey(TVSeries, on_delete=models.CASCADE, related_name='season_list')
+    number = models.PositiveIntegerField()
+    title = models.CharField(max_length=255, blank=True)
+    description = models.TextField(blank=True)
+    release_date = models.DateField(null=True, blank=True)
+    thumbnail = models.TextField(blank = True)
+    episodes = models.PositiveIntegerField(default=1)
+    trailer_url = models.TextField(blank= True)
+
+    def __str__(self):
+        return f"{self.series.title} - Season {self.number}"
+
+class Episode(models.Model):
+    season = models.ForeignKey(Season, on_delete=models.CASCADE, related_name='episode_list')
+    number = models.PositiveIntegerField()
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    release_date = models.DateField(null=True, blank=True)
+    duration = models.PositiveIntegerField(help_text="Duration in minutes", null=True, blank=True)
+    source = models.TextField(blank = True)
+    subtitle = models.TextField(blank= True)
+
+    # def fetch_duration_from_source(self):
+    #     # Check if the source URL is provided
+    #     if not self.source:
+    #         return None
+
+    #     try:
+    #         # Fetch the video file
+    #         response = requests.get(self.source, stream=True)
+    #         if response.status_code == 200:
+    #             # Use ffmpeg to probe the video duration
+    #             probe = ffmpeg.probe(self.source)
+    #             duration = probe['format']['duration']
+    #             return int(float(duration) / 60)  # Convert seconds to minutes
+    #     except Exception as e:
+    #         print(f"Error fetching duration: {e}")
+        
+    #     return None
+
+    def __str__(self):
+        return f"{self.season.series.title} - Season {self.season.number}, Episode {self.number}"
+    
+
