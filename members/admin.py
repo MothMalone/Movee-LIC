@@ -11,9 +11,6 @@ class Movies(admin.ModelAdmin):
     list_display = ("title", "description", "source", "image_src")
     search_fields = ("title",)
 
-class MovieRecommendationAdmin(admin.ModelAdmin):
-    list_display = ("title", "description", "release_date", "genre", "rating", "recommended")
-    search_fields = ("title",)
 
 
 class TVseries(admin.ModelAdmin):
@@ -40,4 +37,3 @@ admin.site.register(Season, Seasons)
 admin.site.register(Episode, Episodes)
 admin.site.register(Actor, Actors)
 admin.site.register(Genre, Genres)
-admin.site.register(Movie, MovieRecommendationAdmin)
