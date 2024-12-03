@@ -1,7 +1,6 @@
 {% extends "master.html" %}
 {% block Title %} A place for film {% endblock %}
 
-
 {% block css %}
 <style>
     @media (min-width: 768px) {
@@ -10,9 +9,9 @@
             flex: 0 0 24%;
         }
     }
-    /* change UI */
+
     .card {
-        height: 98%;
+        height: 100%;
         display: flex;
         flex-direction: column;
         transition: transform 0.3s, box-shadow 0.3s;
@@ -31,7 +30,7 @@
     }
 
     .card-text {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         flex-grow: 1;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -73,39 +72,18 @@
 <div class="container">
     <h2 class="text-center mb-4">Featured Films</h2>
     <div class="row">
-        <div class="col-md-4 animate__animated animate__zoomIn">
+        {% for movie in movies %}
+        <div class="col-md-4 animate__animated animate__zoomIn {% if forloop.counter > 1 %}animate__delay-{{ forloop.counter0 }}s{% endif %}">
             <div class="card">
-                <img src="{{movies.0.image_src}}" class="card-img-top" alt="Film 1">
+                <img src="{{ movie.image_src }}" class="card-img-top" alt="{{ movie.title }}">
                 <div class="card-body">
-                    <h5 class="card-title">{{movies.0.title}}</h5>
-                    <p class="card-text">{{movies.0.description}}</p>
-                    <a href="player/{{ movies.0.id }}" class="btn btn-primary">Watch Now</a>
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <p class="card-text">{{ movie.description }}</p>
+                    <a href="player/{{ movie.id }}" class="btn btn-primary">Watch Now</a>
                 </div>
             </div>
         </div>
-        
-        <div class="col-md-4 animate__animated animate__zoomIn animate__delay-1s">
-            <div class="card">
-                <img src="{{movies.1.image_src}}" class="card-img-top" alt="Film 2">
-                <div class="card-body">
-                    <h5 class="card-title">{{movies.1.title}}</h5>
-                    <p class="card-text">{{movies.1.description}}</p>
-                    <a href="player/{{ movies.1.id }}" class="btn btn-primary">Watch Now</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 animate__animated animate__zoomIn animate__delay-2s">
-            <div class="card">
-                <img src="{{movies.2.image_src}}" class="card-img-top" alt="Film 3">
-                <div class="card-body">
-                    <h5 class="card-title">{{movies.2.title}}</h5>
-                    <p class="card-text">{{movies.2.description}}</p>
-                    <a href="player/{{ movies.2.id }}" class="btn btn-primary">Watch Now</a>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
-
-          
